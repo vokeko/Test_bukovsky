@@ -21,6 +21,7 @@ namespace Test_bukovsky
         private void backButton_Click(object sender, EventArgs e)
         {
             this.Close();
+            //Zavře okno
         }
 
         private void confirmButton_Click(object sender, EventArgs e)
@@ -32,6 +33,7 @@ namespace Test_bukovsky
             Boolean was;
             DateTime newdate;
             string convertedDate;
+            //Definování proměnných.Error určuje, jestli došlo k chybě při procesu (tj. - spustilo se catch)
 
             try
             {
@@ -44,6 +46,7 @@ namespace Test_bukovsky
                 newdate = new DateTime(1, 1, 1);
                 convertedDate = newdate.ToString();
                 MessageBox.Show("Zadejte prosím validní datum");
+                //Pokud není možné převézt čísla na fungující datum tak se aktivuje tento catch
             }
 
             if (genderCombo.SelectedIndex == 0)
@@ -78,22 +81,21 @@ namespace Test_bukovsky
             {
                 string connectionString;
                 SqlConnection cnn;
-                // definování proměnných 
                 connectionString = @"Data Source=HAL-9000;Integrated Security=True;Initial Catalog=Testovacidata";
 
                 cnn = new SqlConnection(connectionString);
-                //K připojení potřebujeme proměnnou pro SqlConnection a String, který nám říká která
                 cnn.Open();
 
                 SqlCommand command;
                 //proměnná, která vykonává SQL příkazy
                 SqlDataAdapter adapter = new SqlDataAdapter();
-                //Proměnná která píše data do databáze
+                //Proměnná která umí psát data do databáze
                 string sql;
                 // sql - string ve kterém jsou příkazy, které má program vykonat
 
                 sql = "Insert into KamerTable(VisitDateTime,Age,WasSatisfied,Sex) values('" + convertedDate + "','" + age + "','" + was + "','" + gen + "')";
                 command = new SqlCommand(sql, cnn);
+                //Program vloží do SQL databáze řádek s hodnotami, které převezme z políček
 
                 adapter.InsertCommand = new SqlCommand(sql, cnn);
 

@@ -23,6 +23,7 @@ namespace Test_bukovsky
         {
             addForm adform = new addForm();
             adform.Show();
+            // Pro vkládání nových dat si aplikace otevře nové windows forms okno
         }
 
         private void readButton_Click(object sender, EventArgs e)
@@ -31,16 +32,9 @@ namespace Test_bukovsky
             SqlConnection cnn;
             // definování proměnných 
             connectionString = @"Data Source=HAL-9000;Integrated Security=True;Initial Catalog=Testovacidata";
-            /* VYSVĚTLENÍ:
-             * Data source - název serveru, v kterém je databáze
-             * Initial catalog - specifikuje název databáze
-             * User ID a Password - ID uživatele a heslo              
-             */
 
             cnn = new SqlConnection(connectionString);
-            //K připojení potřebujeme proměnnou pro SqlConnection a String, který nám říká která
             cnn.Open();
-            //Příkazem otevřeme připojení k databázi a zse zavřeme. Je dobé zavírat připojení k databázi po tom, co už tam nic nepotřebujeme.
             MessageBox.Show("Připojení otevřeno");
 
             SqlCommand command;
@@ -52,7 +46,7 @@ namespace Test_bukovsky
 
             sql = "Select * from KamerTable";
             command = new SqlCommand(sql, cnn);
-            //Sql příkaz vybere sloupce VisitDateTime a Age z tabulky Customers
+            //Sql příkaz vybere Všechny sloupce z tabulky Customers
 
             dataReader = command.ExecuteReader();
             //tímto příkazem se načte výběr
@@ -73,7 +67,7 @@ namespace Test_bukovsky
                     n++;
                 } while (!end);
                 Output = Output + "\n";
-                //...se output plní hodnotami z tabulky. 0 a 1 znamenají první a druhý výsledek selectu. Hodnoty se postupně přidávají po řádcích. \n udělá další odstavec 
+                //...se output plní hodnotami z tabulky. Hodnoty se postupně přidávají po řádcích. \n udělá další odstavec 
             }
             MessageBox.Show(Output);
             //Tabulka se ukáže ve message boxu
@@ -107,6 +101,7 @@ namespace Test_bukovsky
         {
             searchForm searchform = new searchForm();
             searchform.Show();
+            // Pro vkládání hledání dat podle datumu si aplikace otevře nové windows forms okno
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -120,12 +115,17 @@ namespace Test_bukovsky
             var filecontent = string.Empty;
             bool cont = true;
             List<string> lines = new List<string>();
+            //definování nových proměnných. Filepath a filecontent se naplní podle cesty a zvoleného souboru. Proměnná bool určuje, jestli bude kód pokračovat - jestli se objeví chyba, tak nebude.
+
             using (OpenFileDialog dialog = new OpenFileDialog())
             {
+                //OpenFileDialog dialog otevře okno, které nechá uživatele vybrat soubor ke čtení
+
                 try
                 {
                     dialog.Filter = "Text files (.txt)|*.txt";
                     dialog.Multiselect = false;
+                    //Soubor může mít pouze koncovku .txt. Lze vybrat jen jeden.
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
                         filepath = dialog.FileName;
@@ -139,17 +139,20 @@ namespace Test_bukovsky
                             line = reader.ReadLine();
                         }
                         reader.Close();
+                        //Streamreader reader celý soubor přečte a uloží ho po linkách do seznamu lines. Pak se zavře.
                     }
                     else
                     {
                         MessageBox.Show("Vyberte prosím soubor");
                         cont = false;
+                        //Toto se spustí v případě, že uživatel nevybere soubor
                     }
                 }
                 catch
                 {
                     MessageBox.Show("Neplatný soubor");
                     cont = false;
+                    //Pokud něco selže (např. soubor nejde přečíst), tak se spustí tento blok
                 }
 
             }
@@ -157,28 +160,27 @@ namespace Test_bukovsky
 
             if (cont)
             {
+                //Spustí se jen, když se nespustí bloky catch a else
+
                 SqlCommand command;
                 string connectionString;
                 SqlConnection cnn;
                 // definování proměnných 
+
                 connectionString = @"Data Source=HAL-9000;Integrated Security=True;Initial Catalog=Testovacidata";
-
                 cnn = new SqlConnection(connectionString);
-
-                //K připojení potřebujeme proměnnou pro SqlConnection a String, který nám říká která
                 cnn.Open();
 
-
-                //proměnná, která vykonává SQL příkazy
                 SqlDataAdapter adapter = new SqlDataAdapter();
-                //Proměnná která píše data do databáze
                 string sql;
-                // sql - string ve kterém jsou příkazy, které má program vykonat
 
                 string[] cells = new string[5];
                 for (int x = 0; x < lines.Count; x++)
                 {
+                    //For loop se spustí tolikrát, kolik má proměnná lines vložených hodnot
+
                     cells = lines[x].Split('*');
+                    //Proměnná cells je naplněna rozdělenými stringy ze seznamu lines. Dělí se pomocí znamínka *
 
                     sql = "Insert into KamerTable(VisitDateTime,Age,WasSatisfied,Sex) values('" + cells[0] + "','" + cells[1] + "','" + cells[2] + "','" + cells[3] + "')";
                     command = new SqlCommand(sql, cnn);
@@ -186,6 +188,7 @@ namespace Test_bukovsky
                     adapter.InsertCommand = new SqlCommand(sql, cnn);
                     adapter.InsertCommand.ExecuteNonQuery();
                     command.Dispose();
+                    //Pokud vše proběhne hladce, tak se vloží hodnoty postupně do sql databáze.
                 }
 
                 cnn.Close();
