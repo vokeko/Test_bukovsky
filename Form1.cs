@@ -31,7 +31,7 @@ namespace Test_bukovsky
             string connectionString;
             SqlConnection cnn;
             // definování proměnných 
-            connectionString = @"Data Source=HAL-9000;Integrated Security=True;Initial Catalog=Testovacidata";
+            connectionString = @"Data Source=pzs5t5imun.database.windows.net;Initial Catalog=AUTO_ETL_META_DB;User ID=softim_recruit;Password=TNeANy5SaFDf";
 
             cnn = new SqlConnection(connectionString);
             cnn.Open();
@@ -44,7 +44,7 @@ namespace Test_bukovsky
             string sql, Output = "";
             //Output - string, který je naplněn tím, co reader přečte. sql - string ve kterém jsou příkazy, které má program vykonat
 
-            sql = "Select * from KamerTable";
+            sql = "Select * from Customers";
             command = new SqlCommand(sql, cnn);
             //Sql příkaz vybere Všechny sloupce z tabulky Customers
 
@@ -82,7 +82,7 @@ namespace Test_bukovsky
             string connectionString;
             SqlConnection cnn;
             // definování proměnných 
-            connectionString = @"Data Source=HAL-9000;Integrated Security=True;Initial Catalog=Testovacidata";
+            connectionString = @"Data Source=pzs5t5imun.database.windows.net;Initial Catalog=AUTO_ETL_META_DB;User ID=softim_recruit;Password=TNeANy5SaFDf";
             /* VYSVĚTLENÍ:
              * Data source - název serveru, v kterém je databáze
              * Initial catalog - specifikuje název databáze
@@ -167,7 +167,7 @@ namespace Test_bukovsky
                 SqlConnection cnn;
                 // definování proměnných 
 
-                connectionString = @"Data Source=HAL-9000;Integrated Security=True;Initial Catalog=Testovacidata";
+                connectionString = @"Data Source=pzs5t5imun.database.windows.net;Initial Catalog=AUTO_ETL_META_DB;User ID=softim_recruit;Password=TNeANy5SaFDf";
                 cnn = new SqlConnection(connectionString);
                 cnn.Open();
 
@@ -182,7 +182,7 @@ namespace Test_bukovsky
                     cells = lines[x].Split('*');
                     //Proměnná cells je naplněna rozdělenými stringy ze seznamu lines. Dělí se pomocí znamínka *
 
-                    sql = "Insert into KamerTable(VisitDateTime,Age,WasSatisfied,Sex) values('" + cells[0] + "','" + cells[1] + "','" + cells[2] + "','" + cells[3] + "')";
+                    sql = "Insert into Customers(VisitDateTime,Age,WasSatisfied,Sex) values('" + cells[0] + "','" + cells[1] + "','" + cells[2] + "','" + cells[3] + "')";
                     command = new SqlCommand(sql, cnn);
 
                     adapter.InsertCommand = new SqlCommand(sql, cnn);

@@ -81,7 +81,7 @@ namespace Test_bukovsky
             {
                 string connectionString;
                 SqlConnection cnn;
-                connectionString = @"Data Source=HAL-9000;Integrated Security=True;Initial Catalog=Testovacidata";
+                connectionString = @"Data Source=pzs5t5imun.database.windows.net;Initial Catalog=AUTO_ETL_META_DB;User ID=softim_recruit;Password=TNeANy5SaFDf";
 
                 cnn = new SqlConnection(connectionString);
                 cnn.Open();
@@ -93,7 +93,7 @@ namespace Test_bukovsky
                 string sql;
                 // sql - string ve kterém jsou příkazy, které má program vykonat
 
-                sql = "Insert into KamerTable(VisitDateTime,Age,WasSatisfied,Sex) values('" + convertedDate + "','" + age + "','" + was + "','" + gen + "')";
+                sql = "Insert into Customers(VisitDateTime,Age,WasSatisfied,Sex) values('" + convertedDate + "','" + age + "','" + was + "','" + gen + "')";
                 command = new SqlCommand(sql, cnn);
                 //Program vloží do SQL databáze řádek s hodnotami, které převezme z políček
 

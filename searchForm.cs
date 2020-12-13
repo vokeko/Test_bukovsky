@@ -38,7 +38,7 @@ namespace Test_bukovsky
             SqlConnection cnn;
             // definování proměnných 
 
-            connectionString = @"Data Source=HAL-9000;Integrated Security=True;Initial Catalog=Testovacidata";
+            connectionString = @"Data Source=pzs5t5imun.database.windows.net;Initial Catalog=AUTO_ETL_META_DB;User ID=softim_recruit;Password=TNeANy5SaFDf";
 
             DateTime date1 = new DateTime(Convert.ToInt32(YearTextbox.Text), Convert.ToInt32(monthTextbox.Text), Convert.ToInt32(dayTextbox.Text), Convert.ToInt32(hourTextbox.Text), Convert.ToInt32(minuteTextbox.Text), 0);
             string sdate1 = date1.ToString("yyyy-MM-dd HH:mm:ss.fffffff");
@@ -47,11 +47,11 @@ namespace Test_bukovsky
             {
                 DateTime date2 = new DateTime(Convert.ToInt32(year2Textbox.Text), Convert.ToInt32(month2Textbox.Text), Convert.ToInt32(day2Textbox.Text), Convert.ToInt32(hour2Textbox.Text), Convert.ToInt32(minute2Textbox.Text), 0);
                 string sdate2 = date2.ToString("yyyy-MM-dd HH:mm:ss.fffffff");
-                sql = "Select * from KamerTable where VisitDateTime between '" + sdate1 + "' and '" + sdate2 + "'";
+                sql = "Select * from Customers where VisitDateTime between '" + sdate1 + "' and '" + sdate2 + "'";
             }
             else
             {
-                sql = "Select * from KamerTable where VisitDateTime = '" + sdate1 + "'";
+                sql = "Select * from Customers where VisitDateTime = '" + sdate1 + "'";
             }
             //Čísla se převedou do dat a podle zvolení se buď použije jen to první nebo obojí.
 
